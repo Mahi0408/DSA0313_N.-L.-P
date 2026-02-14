@@ -1,24 +1,18 @@
-class Node:
-    def __init__(self, label, children=None):
-        self.label = label
-        self.children = children or []
+import nltk
+from nltk import CFG
+from nltk.parse import ChartParser
 
-    def print_tree(self, level=0):
-        print("  " * level + self.label)
-        for child in self.children:
-            child.print_tree(level + 1)
+grammar = CFG.fromstring("""
+S -> NP VP
+NP -> Det N
+VP -> V NP
+Det -> 'the'
+N -> 'cat' | 'dog'
+V -> 'chased'
+""")
 
-tree = Node("S", [
-    Node("NP", [
-        Node("Det", [Node("the")]),
-        Node("N", [Node("boy")])
-    ]),
-    Node("VP", [
-        Node("V", [Node("eats")]),
-        Node("NP", [
-            Node("N", [Node("apple")])
-        ])
-    ])
-])
+parser = ChartParser(grammar)
+sentence = "the cat chased the dog".split()
 
-tree.print_tree()
+for tree in parser.parse(sentence):
+    print(tree)

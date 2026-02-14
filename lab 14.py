@@ -1,20 +1,10 @@
-grammar = {
-    'singular': ['boy', 'girl'],
-    'plural': ['boys', 'girls'],
-    'singular_verb': ['eats'],
-    'plural_verb': ['eat']
-}
+sentence = "He runs"
+words = sentence.split()
 
-def check_agreement(sentence):
-    words = sentence.split()
-    subject = words[1]
-    verb = words[2]
+subject = words[0]
+verb = words[1]
 
-    if subject in grammar['singular'] and verb in grammar['singular_verb']:
-        return True
-    if subject in grammar['plural'] and verb in grammar['plural_verb']:
-        return True
-    return False
-
-sentence = "the boy eats"
-print("Agreement Correct:", check_agreement(sentence))
+if subject.lower() in ['he','she','it'] and not verb.endswith('s'):
+    print("Agreement Error")
+else:
+    print("Agreement Correct")
